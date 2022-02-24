@@ -1,0 +1,34 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+
+go_library(
+    name = "sqlite3def_lib",
+    srcs = ["sqlite3def.go"],
+    importpath = "github.com/k0kubun/sqldef/cmd/sqlite3def",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//:sqldef",
+        "//adapter",
+        "//adapter/file",
+        "//adapter/sqlite3",
+        "//schema",
+        "@com_github_jessevdk_go_flags//:go-flags",
+    ],
+)
+
+go_binary(
+    name = "sqlite3def",
+    embed = [":sqlite3def_lib"],
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "sqlite3def_test",
+    srcs = ["sqlite3def_test.go"],
+    embed = [":sqlite3def_lib"],
+    deps = [
+        "//adapter",
+        "//adapter/sqlite3",
+        "//cmd/testutils",
+        "//schema",
+    ],
+)

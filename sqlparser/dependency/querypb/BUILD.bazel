@@ -1,0 +1,8 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "querypb",
+    srcs = ["query.pb.go"],
+    importpath = "github.com/k0kubun/sqldef/sqlparser/dependency/querypb",
+    visibility = ["//visibility:public"],
+)

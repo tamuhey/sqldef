@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "hack",
+    srcs = ["hack.go"],
+    importpath = "github.com/k0kubun/sqldef/sqlparser/dependency/hack",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "hack_test",
+    srcs = ["hack_test.go"],
+    embed = [":hack"],
+)

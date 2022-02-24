@@ -1,0 +1,48 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "sqlparser",
+    srcs = [
+        "analyzer.go",
+        "ast.go",
+        "comments.go",
+        "encodable.go",
+        "impossible_query.go",
+        "normalizer.go",
+        "parsed_query.go",
+        "parser.go",
+        "redact_query.go",
+        "token.go",
+        "tracked_buffer.go",
+    ],
+    importpath = "github.com/k0kubun/sqldef/sqlparser",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//sqlparser/dependency/bytes2",
+        "//sqlparser/dependency/querypb",
+        "//sqlparser/dependency/sqltypes",
+    ],
+)
+
+go_test(
+    name = "sqlparser_test",
+    srcs = [
+        "analyzer_test.go",
+        "ast_test.go",
+        "comments_test.go",
+        "encodable_test.go",
+        "github_test.go",
+        "normalizer_test.go",
+        "parse_next_test.go",
+        "parse_test.go",
+        "parsed_query_test.go",
+        "precedence_test.go",
+        "redact_query_test.go",
+        "token_test.go",
+    ],
+    embed = [":sqlparser"],
+    deps = [
+        "//sqlparser/dependency/querypb",
+        "//sqlparser/dependency/sqltypes",
+    ],
+)

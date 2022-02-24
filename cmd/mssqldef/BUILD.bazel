@@ -1,0 +1,35 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+
+go_library(
+    name = "mssqldef_lib",
+    srcs = ["mssqldef.go"],
+    importpath = "github.com/k0kubun/sqldef/cmd/mssqldef",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//:sqldef",
+        "//adapter",
+        "//adapter/file",
+        "//adapter/mssql",
+        "//schema",
+        "@com_github_jessevdk_go_flags//:go-flags",
+        "@org_golang_x_term//:term",
+    ],
+)
+
+go_binary(
+    name = "mssqldef",
+    embed = [":mssqldef_lib"],
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "mssqldef_test",
+    srcs = ["mssqldef_test.go"],
+    embed = [":mssqldef_lib"],
+    deps = [
+        "//adapter",
+        "//adapter/mssql",
+        "//cmd/testutils",
+        "//schema",
+    ],
+)

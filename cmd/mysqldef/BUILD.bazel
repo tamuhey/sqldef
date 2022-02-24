@@ -1,0 +1,35 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+
+go_library(
+    name = "mysqldef_lib",
+    srcs = ["mysqldef.go"],
+    importpath = "github.com/k0kubun/sqldef/cmd/mysqldef",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//:sqldef",
+        "//adapter",
+        "//adapter/file",
+        "//adapter/mysql",
+        "//schema",
+        "@com_github_jessevdk_go_flags//:go-flags",
+        "@org_golang_x_term//:term",
+    ],
+)
+
+go_binary(
+    name = "mysqldef",
+    embed = [":mysqldef_lib"],
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "mysqldef_test",
+    srcs = ["mysqldef_test.go"],
+    embed = [":mysqldef_lib"],
+    deps = [
+        "//adapter",
+        "//adapter/mysql",
+        "//cmd/testutils",
+        "//schema",
+    ],
+)

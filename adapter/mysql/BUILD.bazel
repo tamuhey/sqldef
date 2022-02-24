@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "mysql",
+    srcs = ["mysql.go"],
+    importpath = "github.com/k0kubun/sqldef/adapter/mysql",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//adapter",
+        "@com_github_go_sql_driver_mysql//:mysql",
+    ],
+)

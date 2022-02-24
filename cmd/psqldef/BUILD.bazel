@@ -1,0 +1,37 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+
+package(default_visibility = ["//visibility:public"])
+
+go_library(
+    name = "psqldef_lib",
+    srcs = ["psqldef.go"],
+    importpath = "github.com/k0kubun/sqldef/cmd/psqldef",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//:sqldef",
+        "//adapter",
+        "//adapter/file",
+        "//adapter/postgres",
+        "//schema",
+        "@com_github_jessevdk_go_flags//:go-flags",
+        "@org_golang_x_term//:term",
+    ],
+)
+
+go_binary(
+    name = "psqldef",
+    embed = [":psqldef_lib"],
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "psqldef_test",
+    srcs = ["psqldef_test.go"],
+    embed = [":psqldef_lib"],
+    deps = [
+        "//adapter",
+        "//adapter/postgres",
+        "//cmd/testutils",
+        "//schema",
+    ],
+)
